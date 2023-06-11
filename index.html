@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>main</title>
+  <meta charset="GBK">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background-image: url("background.jpg");
+      background-color: #e7e7de;
+      font-family: 'Open Sans', sans-serif;
+      color: #333;
+      padding: 50px;
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    h1 {
+      color: #ffa500; /* 修改建设中三个字颜色为藤黄色 */
+      font-size: 48px;
+      margin-top: 0;
+      text-align: center;
+      text-shadow: 2px 2px 2px rgba(0, 0, 0, .5);
+    }
+
+    p {
+      font-size: 20px;
+      margin-bottom: 30px;
+      text-align: justify;
+      opacity: 1;
+    }
+
+    .profile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #fcfaf5;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0px 3px 10px rgba(0, 0, 0, .2);
+      max-width: 800px;
+      margin: 50px auto 0;
+      opacity: 1;
+    }
+
+    .profile img {
+      border-radius: 50%;
+      width: 150px;
+      height: 150px;
+      margin-right: 0;
+      box-shadow: 0px 3px 10px rgba(0, 0, 0, .2);
+      opacity: 1;
+    }
+
+    .profile h2 {
+      color: #87CEFA;
+      font-size: 36px;
+      margin-bottom: 10px;
+      text-align: center;
+      text-shadow: 2px 2px 2px rgba(0, 0, 0, .5);
+    }
+
+    button {
+      background-color: #87CEFA;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      padding: 10px 35px;
+      border-radius: 25px;
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, .2);
+      font-size: 18px;
+      transition: background-color 0.3s ease-in-out;
+      display: block;
+      margin: 20px auto 0;
+      max-width: 200px;
+    }
+
+    button:hover {
+      background-color: #63537b;
+    }
+    .trail {
+      position: absolute;
+      background-color: transparent;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      border: 2px solid #87CEFA;
+      z-index: 9999;
+      pointer-events: none;
+      box-shadow: 0 0 10px #87CEFA;
+      transform: scale(0);
+      opacity: 0;
+      transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+    }
+
+    .trail.active {
+      transform: scale(1);
+      opacity: 0.7;
+      border-color: #87CEEB; /* 修改鼠标拖尾特效边框颜色为云水蓝 */
+    }
+
+    .trail.active::before {
+      content: "";
+      position: absolute;
+      top: -10px;
+      left: -10px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 2px solid #87CEFA;
+      z-index: -1;
+      opacity: 0.3;
+      animation: pulse 1s ease-out;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(0);
+        opacity: 0.3;
+      }
+      50% {
+        transform: scale(1);
+        opacity: 0.5;
+      }
+      100% {
+        transform: scale(2);
+        opacity: 0;
+      }
+    }
+    .particle {
+      position: absolute;
+      background-color: #4f3a65;
+      border-radius: 50%;
+      width: 10px;
+      height: 10px;
+      z-index: 9999;
+      pointer-events: none;
+      animation: particle 1s ease-out;
+    }
+
+    @keyframes particle {
+      0% {
+        transform: scale(0);
+        opacity: 0.5;
+      }
+      50% {
+        transform: scale(1);
+        opacity: 0.8;
+      }
+      100% {
+        transform: scale(2);
+        opacity: 0;
+      }
+    }
+    ::selection {
+      background-color: rgba(255, 182, 193, 0.5);
+      color: #000;
+    }
+    .profile {
+      opacity: 0.5;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>建设中</h1>
+  <div class="profile">
+    <img src="anime.jpg" alt="profile picture">
+    <div>
+      <h2>雨纸</h2>
+    </div>
+    <button>什么用都没有</button>
+  </div>
+  <p>一个无聊学生的无聊项目而已.</p>
+  <p>下载项</p>
+  <a href="https://nos.netease.com/ydschool-online/1626146255319Dev-Cpp_5.11_TDM-GCC_4.9.2_Setup.exe" download>DEV-C++</a>
+  <div class="trail"></div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var body = document.querySelector('body');
+      var trail = document.querySelector('.trail');
+
+      body.addEventListener('mousemove', function(e) {
+        var distance = Math.sqrt(Math.pow(e.pageX - trail.offsetLeft, 
+
+2) + Math.pow(e.pageY - trail.offsetTop, 2));
+        var speed = distance / 15;
+        trail.style.left = e.pageX + 'px';
+        trail.style.top = e.pageY + 'px';
+        trail.classList.add('active');
+        setTimeout(function() {
+          trail.classList.remove('active');
+        }, speed);
+      });
+
+      body.addEventListener('click', function(e) {
+        var particle = document.createElement('div');
+        particle.classList.add('particle');
+        particle.style.left = e.pageX + 'px';
+        particle.style.top = e.pageY + 'px';
+        body.appendChild(particle);
+        setTimeout(function() {
+          particle.remove();
+        }, 1000);
+      });
+    });
+  </script>
+</body>
+
+</html>
